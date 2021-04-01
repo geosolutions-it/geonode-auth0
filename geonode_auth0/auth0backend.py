@@ -6,7 +6,7 @@ from social_core.backends.oauth import BaseOAuth2
 
 class Auth0(BaseOAuth2):
     """Auth0 OAuth authentication backend"""
-    name = 'geonode_auth0'
+    name = 'auth0'
     SCOPE_SEPARATOR = ' '
     ACCESS_TOKEN_METHOD = 'POST'
     REDIRECT_STATE = False
