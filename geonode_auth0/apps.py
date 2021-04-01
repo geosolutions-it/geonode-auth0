@@ -21,9 +21,10 @@ class GeoNodeAuth0Config(AppConfig):
 
         if getattr(settings, 'AUTH0_FORCE_SSO', False):
             # check Auth0 configuration if Auth0 is forced authentication method
-            if not getattr(settings, 'SOCIAL_AUTH_AUTH0_KEY', '') or not getattr(settings, 'SOCIAL_AUTH_AUTH0_KEY', ''):
+            if not getattr(settings, 'SOCIAL_AUTH_AUTH0_KEY', '') or not getattr(settings, 'SOCIAL_AUTH_AUTH0_KEY', '')\
+                    or not getattr(settings, 'SOCIAL_AUTH_AUTH0_DOMAIN', ''):
                 from django.core.exceptions import ImproperlyConfigured
 
                 raise ImproperlyConfigured(
-                    'Missing Auth0 configuration: check AUTH0_CLIENT_ID and/or AUTH0_CLIENT_SECRET envvars.'
+                    'Missing Auth0 configuration. Check the following settings: SOCIAL_AUTH_AUTH0_KEY, SOCIAL_AUTH_AUTH0_KEY, SOCIAL_AUTH_AUTH0_DOMAIN'
                 )
