@@ -1,5 +1,3 @@
-# geonode-auth0
-
 ## Auth0 integration
 
 #### Description
