@@ -33,7 +33,7 @@ the login. To prevent this behavior, the message template had to be overridden.
 
 1. Install the application and it's dependencies
     ```
-    pip install -e git+https://github.com/geosolutions-it/geonode-auth0.git@master#egg=geonode_auth0
+    pip install -e git+https://github.com/geosolutions-it/geonode-auth0.git@main#egg=geonode_auth0
     ```
    
 2. Add `social_django` (which provides base OpenID functionalities for the app) and `geonode_auth0` to INSTALLED_APPS on the beginning of the list:
