@@ -12,7 +12,7 @@ setup_requires = [
 ]
 
 setup(
-    name='django-http-commands',
+    name='geonode_auth0',
     version=geonode_auth0.__version__,
     url=geonode_auth0.__url__,
     description=geonode_auth0.__doc__,
