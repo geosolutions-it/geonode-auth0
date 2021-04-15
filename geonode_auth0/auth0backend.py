@@ -1,8 +1,5 @@
 from jose import jwt
 from urllib import request
-from types import StringTypes
-from collections import Iterable
-
 from django.conf import settings
 from social_core.backends.oauth import BaseOAuth2
 
@@ -39,7 +36,7 @@ class Auth0(BaseOAuth2):
 
         roles = payload.get(settings.AUTH0_ROLE_CLAIM, None)
 
-        if isinstance(roles, Iterable) and not isinstance(roles, StringTypes):
+        if isinstance(roles, (list, tuple)):
             role = roles[0] if roles else settings.AUTH0_DEFAULT_ROLE
         else:
             role = roles if roles else settings.AUTH0_DEFAULT_ROLE
