@@ -7,6 +7,9 @@ AUTH0_FORCE_SSO = False
 
 AUTH0_ADMIN_ROLE = 'factory'
 AUTH0_ROLE_CLAIM = 'https://sdf.com/role'
+AUTH0_ADMIN_ROLE = 'factory'
+AUTH0_DEFAULT_ROLE = 'customer'
+AUTH0_REJECTED_ROLES = ['dealer', 'subsidiary']
 
 SOCIAL_AUTH_AUTH0_KEY = os.getenv('AUTH0_CLIENT_ID')
 SOCIAL_AUTH_AUTH0_SECRET = os.getenv('AUTH0_CLIENT_SECRET')
@@ -22,7 +25,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.auth_allowed',
     'social_core.pipeline.social_auth.social_user',
     'social_core.pipeline.user.get_username',
-    'social_core.pipeline.user.create_user',
+    'geonode_auth0.pipelines.create_user',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
