@@ -34,13 +34,20 @@ class Auth0(BaseOAuth2):
         audience = self.setting('KEY')  # CLIENT_ID
         payload = jwt.decode(id_token, jwks.read(), algorithms=['RS256'], audience=audience, issuer=issuer)
 
+        roles = payload.get(settings.AUTH0_ROLE_CLAIM, None)
+
+        if isinstance(roles, (list, tuple)):
+            role = roles[0] if roles else settings.AUTH0_DEFAULT_ROLE
+        else:
+            role = roles if roles else settings.AUTH0_DEFAULT_ROLE
+
         details = {
             'username': payload['nickname'],
             'first_name': payload['name'],
             'picture': payload['picture'],
             'user_id': payload['sub'],
             'email': payload['email'],
-            'role': payload[settings.AUTH0_ROLE_CLAIM][0],
+            'role': role,
         }
 
         return details

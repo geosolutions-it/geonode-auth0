@@ -7,6 +7,7 @@ AUTH0_FORCE_SSO = False
 
 AUTH0_ADMIN_ROLE = 'factory'
 AUTH0_ROLE_CLAIM = 'https://sdf.com/role'
+AUTH0_DEFAULT_ROLE = 'customer'
 
 SOCIAL_AUTH_AUTH0_KEY = os.getenv('AUTH0_CLIENT_ID')
 SOCIAL_AUTH_AUTH0_SECRET = os.getenv('AUTH0_CLIENT_SECRET')
