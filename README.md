@@ -119,3 +119,40 @@ the login. To prevent this behavior, the message template had to be overridden.
 **Note**: In case `AUTH0_FORCE_SSO` is `True`, `SOCIAL_AUTH_AUTH0_KEY`, `SOCIAL_AUTH_AUTH0_KEY` and 
 `SOCIAL_AUTH_AUTH0_DOMAIN` settings variables are required (in the configuration above, they are set using 
 environment variables) or `ImproperlyConfigured` exception is raised.
+
+
+### Rejected Roles
+
+This application allows setting user's roles (retrieved from the custom claim), which will be rejected
+at login.
+
+In order to configure such behavior, you need to add the following in your project settings:
+`AUTH0_REJECTED_ROLES`, `AUTH0_REJECTION_REDIRECT`, and append `UserRejectedMiddleware` middleware 
+to your middleware list, e.g.:
+```python
+AUTH0_REJECTED_ROLES = ['my_role1', 'my_role2']                            # default ['dealer', 'subsidiary']
+AUTH0_REJECTION_REDIRECT = '/<geonode-auth0-url-perfix>/unauthorized'    # does not have a default value
+MIDDLEWARE = (
+   ...
+   'geonode_auth0.middleware.UserRejectedMiddleware',
+)
+```
+
+The configuration above will prevent a user with a group in `AUTH0_REJECTED_ROLES` from login
+and account creation with Auth0 provider, redirecting them (using `UserRejectedMiddleware`)
+to an unauthorized view (provided in `AUTH0_REJECTION_REDIRECT`).
+
+Please note, that if your Geonode instance is in `LOCKDOWN` mode, you need to update the `AUTH_EXEMPT_URLS` list:
+```python
+AUTH_EXEMPT_URLS = (
+    ...
+    AUTH0_REJECTION_REDIRECT,
+    f'/\w{{2}}{AUTH0_REJECTION_REDIRECT}',
+)
+```
+
+(the first entry allows reaching the unauthorized view, and the second one allows reaching translations of 
+unauthorized view).
+
+**Warning:** It is very important to  test the above exempts, since a simple typo may cause the system
+to go into an infinite redirection loop (if a User is logged in to the Auth0 provider).
