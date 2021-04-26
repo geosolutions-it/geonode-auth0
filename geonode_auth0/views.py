@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.conf import settings
+from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 
@@ -24,3 +25,10 @@ def admin_logout_view(request):
     Custom django admin logout view, redirecting requests to settings.LOGOUT_URL
     """
     return HttpResponseRedirect(settings.LOGOUT_URL)
+
+
+def rejected_user_view(request):
+    """
+    View serving a HTML page for rejected users (rejection based on settings.AUTH0_REJECTED_ROLES and ROLE claim)
+    """
+    return render(request, 'geonode_auth0/rejected_user_view.html')
