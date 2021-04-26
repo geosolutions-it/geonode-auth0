@@ -14,4 +14,4 @@ class UserRejectedMiddleware:
     def process_exception(self, request, exception):
         if isinstance(exception, AuthForbidden):
             if getattr(settings, 'AUTH0_REJECTION_REDIRECT', ''):
-                return HttpResponseRedirect(settings.SOCIAL_AUTH_LOGIN_ERROR_URL)
+                return HttpResponseRedirect(settings.AUTH0_REJECTION_REDIRECT)
