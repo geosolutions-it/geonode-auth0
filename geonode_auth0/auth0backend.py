@@ -51,3 +51,14 @@ class Auth0(BaseOAuth2):
         }
 
         return details
+
+    def auth_allowed(self, response, details):
+        """Return True if the user should be allowed to authenticate"""
+
+        allowed = super().auth_allowed(response, details)
+        role = details.get('role', None)
+
+        if role in settings.AUTH0_REJECTED_ROLES:
+            return False
+
+        return allowed
